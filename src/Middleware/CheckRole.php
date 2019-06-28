@@ -27,9 +27,14 @@ class CheckRole
      */
     public function handle($request, Closure $next, $role)
     {
-        if ($this->auth->check() && $this->auth->user()->hasRole($role)) {
-            return $next($request);
+        $role = explode('|', $role);
+        
+        foreach ($role as $key => $value) {
+            if ($this->auth->check() && $this->auth->user()->hasRole($value)) {
+                return $next($request);
+            }
         }
+        
         return redirect('/');
         // abort(403, 'You do not have permission');
     }

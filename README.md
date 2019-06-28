@@ -267,7 +267,7 @@ You can easily protect your routes with `role` and `permission` params:
 ```php
 Route::get('/admin', [
     'uses' => 'AdminController@index',
-    'middleware' => 'role:admin'
+    'middleware' => 'role:admin|user'
 ]);
 
 Route::get('/products/create', [
@@ -281,7 +281,7 @@ Route::get('/products/create', [
 You can check roles and permissions in Blade like this:
 
 ```php
-@ifUserIs('admin')
+@ifUserIs('admin|user')
     // show content only for admin
 @else
     // show content for other roles

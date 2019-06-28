@@ -33,9 +33,17 @@ trait Rbac
      */
     public function hasRole($slug)
     {
-        $roles = $this->roles()->pluck('slug')->toArray();
+        $slug = str_replace(["'", '"'], "", $slug);
 
-        return in_array($slug, $roles);
+        foreach (explode('|', $slug) as $key => $value) {
+            $roles = $this->roles()->pluck('slug')->toArray();
+
+            if(in_array($value, $roles)){
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
